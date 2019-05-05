@@ -4,16 +4,12 @@ import PropTypes from 'prop-types';
 
 class Todos extends React.Component {
 
-  itemMark = (e) => {
-    console.log('Mark2');
-  }
-  
   render() {
 
     // console.log(this.props.todos);
 
     return this.props.todos.map( (todo) => (
-      <TodosItem key={todo.id} todo={todo} itemMark={ this.props.itemMark } />
+      <TodosItem key={todo.id} todo={todo} markComplete={ this.props.markComplete } />
     ));
   }
 }
