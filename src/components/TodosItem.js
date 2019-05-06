@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 
 export class TodosItem extends Component {
   
+  deleteStyle = {
+    cursor: 'pointer',
+    float: 'right',
+    borderRadius: '50%'
+  }
+
   getItemStyle = () => {
     return {
       textDecoration: this.props.todo.completed ? 'line-through' : 'none',
@@ -21,6 +27,7 @@ export class TodosItem extends Component {
         <p style={ this.getItemStyle() } >
           <input type="checkbox" onChange={ this.props.markComplete.bind(this, id) } />{' '}
           {title}
+          <button style={ this.deleteStyle } onClick={ this.props.deleteTodo.bind(this, id) }>X</button>
         </p>
       </div>
     )
