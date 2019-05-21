@@ -24,15 +24,15 @@ class App extends React.Component {
       }
     ]}
 
-    markComplete = (id) => {
-      this.setState( { todos: this.state.todos.map( (todo) => {
-        if (todo.id === id) {
-          todo.completed = !todo.completed;
-        }
-        return todo;
-      } 
-      ) } );
-    }
+  markComplete = (id) => {
+    this.setState( { todos: this.state.todos.map( (todo) => {
+      if (todo.id === id) {
+        todo.completed = !todo.completed;
+      }
+      return todo;
+    } 
+    ) } );
+  }
 
   //Delete Todo
   // deleteTodo = (id) => {
@@ -48,13 +48,17 @@ class App extends React.Component {
   deleteTodo = (id) => {
     this.setState( { todos: [...this.state.todos.filter( todo => todo.id !== id )] } );
   }
+
+  addTodo = (title) => {
+    console.log(title);
+  }
   
   render() {
     return (
       <div className="App">
         <div className="container">
           <Header />
-          <AddTodo />
+          <AddTodo addTodo={ this.addTodo } />
           <Todos todos={ this.state.todos } markComplete={ this.markComplete } deleteTodo={ this.deleteTodo } />
         </div>
       </div>
