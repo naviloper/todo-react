@@ -1,12 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import arrayMove from 'array-move';
 import './App.css';
 import Todos from './components/Todos';
 import Header from './components/layout/Header';
 import AddTodo from './components/AddTodo';
-import uuid from 'uuid';
+//import uuid from 'uuid';
 import { About } from './components/pages/About';
 import axios from 'axios';
+
+
 
 class App extends React.Component {
   state = {
@@ -59,6 +62,12 @@ class App extends React.Component {
 
   }
 
+  onSortEnd = ({oldIndex, newIndex}) => {
+    this.setState(({todos}) => ({
+      todos: arrayMove(todos, oldIndex, newIndex),
+    }));
+  };
+
   componentDidMount() {
     axios.get("https://jsonplaceholder.typicode.com/todos?_limit=5")
       .then( res => this.setState( { todos: res.data } ) );
@@ -73,7 +82,10 @@ class App extends React.Component {
             <Route exact path="/" render={ props => (
               <React.Fragment>
                 <AddTodo addTodo={ this.addTodo } />
-                <Todos todos={ this.state.todos } markComplete={ this.markComplete } deleteTodo={ this.deleteTodo } />
+                <Todos todos={ this.state.todos } 
+                markComplete={ this.markComplete } 
+                deleteTodo={ this.deleteTodo } 
+                onSortEnd={this.onSortEnd} />
               </React.Fragment>
              ) } />
 

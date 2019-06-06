@@ -1,37 +1,36 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import {SortableElement} from 'react-sortable-hoc';
 
-export class TodosItem extends Component {
-  
-  deleteStyle = {
-    cursor: 'pointer',
-    float: 'right',
-    borderRadius: '50%'
-  }
+const TodosItem = SortableElement(({todo, markComplete, deleteTodo}) => {
 
-  getItemStyle = () => {
+  const { id, title, completed } = todo;
+
+  const getItemStyle = () => {
     return {
-      textDecoration: this.props.todo.completed ? 'line-through' : 'none',
+      textDecoration: todo.completed ? 'line-through' : 'none',
       backgroundColor: "#f4f4f4",
       padding: '10px',
-      borderBottom: '1px #ccc dotted'
+      borderBottom: '1px #ccc dotted',
+      listStyle: 'none'
     }
   }
 
-  render() {
-    
-    const { id, title, completed } = this.props.todo;
-    
-    return (
-      <div>
-        <p style={ this.getItemStyle() } >
-          <input type="checkbox" onChange={ this.props.markComplete.bind(this, id) } defaultChecked={ completed } />{' '}
-          {title}
-          <button style={ this.deleteStyle } onClick={ this.props.deleteTodo.bind(this, id) }>X</button>
-        </p>
-      </div>
-    )
-  }
+  return (
+    <li style={ getItemStyle() }>
+      <p>
+        <input type="checkbox" onChange={ markComplete.bind(this, id) } defaultChecked={ completed } />{' '}
+        {title}
+        <button style={ deleteStyle } onClick={ deleteTodo.bind(this, id) }>X</button>
+      </p>
+    </li>
+  );
+});
+
+const deleteStyle = {
+  cursor: 'pointer',
+  float: 'right',
+  borderRadius: '50%'
 }
 
 TodosItem.propTypes = {
